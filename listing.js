@@ -41,17 +41,28 @@ function showToast(message, { timeout = 2000 } = {}) {
 
 function openProject(projectId) {
   const url = new URL(window.location.href);
-  url.pathname = url.pathname.replace(/index\.html?$/, "curation.html");
-  url.search = "";
-  url.searchParams.set("id", projectId);
+  let pathname = url.pathname;
+  // Support GitHub Pages: path can be "/repo-name/" or "/repo-name/index.html"
+  if (/\/index\.html?$/i.test(pathname)) {
+    pathname = pathname.replace(/\/index\.html?$/i, "/curation.html");
+  } else {
+    pathname = pathname.replace(/\/?$/, "/") + "curation.html";
+  }
+  url.pathname = pathname;
+  url.search = "?id=" + encodeURIComponent(projectId);
   window.location.href = url.toString();
 }
 
 function buildShareUrl(projectId) {
   const url = new URL(window.location.href);
-  url.pathname = url.pathname.replace(/index\.html?$/, "curation.html");
-  url.search = "";
-  url.searchParams.set("id", projectId);
+  let pathname = url.pathname;
+  if (/\/index\.html?$/i.test(pathname)) {
+    pathname = pathname.replace(/\/index\.html?$/i, "/curation.html");
+  } else {
+    pathname = pathname.replace(/\/?$/, "/") + "curation.html";
+  }
+  url.pathname = pathname;
+  url.search = "?id=" + encodeURIComponent(projectId);
   return url.toString();
 }
 
@@ -110,7 +121,8 @@ function renderProjects() {
     });
 
     row.addEventListener("click", (event) => {
-      if (event.target === title) return;
+      // Clicking the project name: allow rename (focus contenteditable), do not navigate
+      if (event.target.closest(".project-title")) return;
       if (event.target.closest(".share-button")) return;
       openProject(project.id);
     });
