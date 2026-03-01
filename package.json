@@ -1,0 +1,10 @@
+{
+  "name": "visual-curator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small responsive web app for curating image and video files via drag-and-drop.",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
+
