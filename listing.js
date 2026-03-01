@@ -40,30 +40,18 @@ function showToast(message, { timeout = 2000 } = {}) {
 }
 
 function openProject(projectId) {
-  const url = new URL(window.location.href);
-  let pathname = url.pathname;
-  // Support GitHub Pages: path can be "/repo-name/" or "/repo-name/index.html"
-  if (/\/index\.html?$/i.test(pathname)) {
-    pathname = pathname.replace(/\/index\.html?$/i, "/curation.html");
-  } else {
-    pathname = pathname.replace(/\/?$/, "/") + "curation.html";
-  }
-  url.pathname = pathname;
-  url.search = "?id=" + encodeURIComponent(projectId);
-  window.location.href = url.toString();
+  // Use relative URL so it works on GitHub Pages (e.g. /repo-name/) and locally
+  const q = encodeURIComponent(projectId);
+  window.location.href = "curation.html?id=" + q;
 }
 
 function buildShareUrl(projectId) {
-  const url = new URL(window.location.href);
-  let pathname = url.pathname;
-  if (/\/index\.html?$/i.test(pathname)) {
-    pathname = pathname.replace(/\/index\.html?$/i, "/curation.html");
-  } else {
-    pathname = pathname.replace(/\/?$/, "/") + "curation.html";
+  const o = window.location.origin;
+  let path = window.location.pathname;
+  if (!path.endsWith("/")) {
+    path = path.replace(/\/[^/]*$/, "/");
   }
-  url.pathname = pathname;
-  url.search = "?id=" + encodeURIComponent(projectId);
-  return url.toString();
+  return o + path + "curation.html?id=" + encodeURIComponent(projectId);
 }
 
 function renderProjects() {
@@ -121,14 +109,22 @@ function renderProjects() {
     });
 
     row.addEventListener("click", (event) => {
-      // Clicking the project name: allow rename (focus contenteditable), do not navigate
       if (event.target.closest(".project-title")) return;
-      if (event.target.closest(".share-button")) return;
+      if (event.target.closest(".project-actions")) return;
       openProject(project.id);
     });
 
     const actions = document.createElement("div");
     actions.className = "project-actions";
+
+    const openButton = document.createElement("button");
+    openButton.className = "open-project-button";
+    openButton.type = "button";
+    openButton.textContent = "Open project";
+    openButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      openProject(project.id);
+    });
 
     const shareButton = document.createElement("button");
     shareButton.className = "share-button";
@@ -154,6 +150,7 @@ function renderProjects() {
       }
     });
 
+    actions.appendChild(openButton);
     actions.appendChild(shareButton);
 
     row.appendChild(title);

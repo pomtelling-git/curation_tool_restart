@@ -205,6 +205,22 @@ body {
   gap: 4px;
 }
 
+.open-project-button {
+  padding: 2px 6px;
+  border-radius: 0;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-main);
+  font-size: 11px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.open-project-button:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
 .share-button {
   width: 18px;
   height: 18px;
