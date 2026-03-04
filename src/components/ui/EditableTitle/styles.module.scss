@@ -1,0 +1,14 @@
+@use '../../../styles/variables' as *;
+
+.title {
+  font-size: $font-size-label;
+  border-bottom: $border-width solid transparent;
+  padding: 0 $spacing-xs;
+  min-width: 80px;
+  outline: none;
+  cursor: text;
+
+  &:focus {
+    border-bottom-color: $border;
+  }
+}

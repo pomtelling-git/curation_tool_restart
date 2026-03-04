@@ -1,0 +1,36 @@
+@use '../../../styles/variables' as *;
+
+.button {
+  border-radius: $border-radius;
+  border: $border-width solid $border;
+  background: $bg;
+  color: $text-main;
+  cursor: pointer;
+  font-size: $font-size-label;
+  line-height: 1;
+  transition: background $transition-fast, color $transition-fast;
+
+  &:hover {
+    background: $text-main;
+    color: $bg;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.default {
+  padding: $spacing-xs 6px;
+}
+
+.icon {
+  width: $button-size;
+  height: $button-size;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

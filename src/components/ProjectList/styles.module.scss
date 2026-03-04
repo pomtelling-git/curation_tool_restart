@@ -1,0 +1,97 @@
+@use '../../styles/variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.label {
+  font-size: $font-size-label;
+  text-transform: uppercase;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: 6px;
+}
+
+.empty {
+  margin: $spacing-sm 0 0;
+  font-size: $font-size-label;
+  color: $text-muted;
+}
+
+.project-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+  padding: $spacing-sm 6px;
+  border: $border-width solid $border;
+  cursor: pointer;
+  transition: opacity $transition-medium, transform $transition-medium;
+}
+
+.project-row--removing {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.project-title {
+  font-size: $font-size-label;
+  min-width: 80px;
+}
+
+.project-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  position: relative;
+}
+
+.project-actions--confirming {
+  // Just show the confirm UI, buttons hidden via React conditional
+}
+
+.confirm-delete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: fade-in 0.2s ease-out;
+}
+
+.confirm-delete-text {
+  font-size: $font-size-label;
+  white-space: nowrap;
+}
+
+.share-button--copied {
+  width: auto;
+  min-width: $button-size;
+  padding: 0 $spacing-sm;
+  border: none;
+  background: transparent;
+  color: $text-main;
+  cursor: default;
+  font-size: $font-size-label;
+
+  &:hover {
+    background: transparent;
+    color: $text-main;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

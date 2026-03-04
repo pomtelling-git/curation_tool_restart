@@ -1,10 +1,40 @@
 {
   "name": "visual-curator",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "A small responsive web app for curating image and video files via drag-and-drop.",
+  "description": "A visual curation tool for DixonBaxi – manage creative projects and media assets.",
   "scripts": {
-    "start": "npx serve ."
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.1",
+    "lucide-react": "^0.479.0",
+    "next": "^15.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.4",
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "^15.2.1",
+    "jsdom": "^26.0.0",
+    "prisma": "^6.5.0",
+    "sass": "^1.85.1",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
   }
 }
-

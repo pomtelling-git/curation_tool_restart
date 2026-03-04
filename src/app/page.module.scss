@@ -1,0 +1,17 @@
+@use '../styles/variables' as *;
+
+.app {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  padding: $spacing-lg $spacing-lg $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .app {
+    padding: $spacing-md;
+  }
+}

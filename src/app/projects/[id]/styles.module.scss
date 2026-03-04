@@ -1,0 +1,49 @@
+@use '../../../styles/variables' as *;
+
+.app {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  padding: $spacing-lg $spacing-lg $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.project-name {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.project-label {
+  font-size: $font-size-label;
+  text-transform: uppercase;
+}
+
+.gallery-meta {
+  margin: 0;
+  font-size: $font-size-meta;
+  color: $text-muted;
+  flex-shrink: 0;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .app {
+    padding: $spacing-md;
+  }
+}
