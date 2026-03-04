@@ -32,9 +32,14 @@ export async function POST(request: Request) {
     const project = await projectService.createProject(parsed.data.name)
     return NextResponse.json(project, { status: 201 })
   } catch (error) {
+    const message =
+      error instanceof Error ? error.message : String(error)
     console.error('POST /api/projects error:', error)
     return NextResponse.json(
-      { error: 'Failed to create project' },
+      {
+        error: 'Failed to create project',
+        ...(process.env.NODE_ENV === 'development' && { detail: message }),
+      },
       { status: 500 }
     )
   }

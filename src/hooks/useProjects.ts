@@ -31,12 +31,21 @@ export function useProjects() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name }),
         })
-        if (!res.ok) throw new Error('Failed to create project')
-        const project: Project = await res.json()
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          const msg =
+            typeof data?.detail === 'string'
+              ? data.detail
+              : data?.error ?? 'Failed to create project'
+          throw new Error(msg)
+        }
+        const project = data as Project
         addProject(project)
         return project
-      } catch {
-        showToast('Could not create project', 'error')
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : 'Could not create project'
+        showToast(message, 'error')
         return null
       }
     },
