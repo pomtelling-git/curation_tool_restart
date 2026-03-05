@@ -22,7 +22,7 @@
 .drop-subtitle {
   margin: 0;
   font-size: $font-size-label;
-  color: var(--text-muted);
+  color: $text-muted;
 }
 
 .compact .drop-zone-inner {
@@ -38,5 +38,5 @@
 }
 
 .drag-over {
-  border: $border-width dashed var(--border);
+  border: $border-width dashed $border;
 }

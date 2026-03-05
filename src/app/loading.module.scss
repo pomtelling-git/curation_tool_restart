@@ -21,16 +21,16 @@
 .label {
   width: 72px;
   height: 12px;
-  background: var(--skeleton-bg);
-  border: 1px solid var(--skeleton-border);
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
   @include skel.skeleton-pulse;
 }
 
 .button {
   width: 100px;
   height: 24px;
-  background: var(--skeleton-bg);
-  border: 1px solid var(--skeleton-border);
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
   @include skel.skeleton-pulse;
 }
 
@@ -43,7 +43,7 @@
 
 .row {
   height: 36px;
-  border: 1px solid var(--skeleton-border);
+  border: 1px solid skel.$skeleton-border;
   background: transparent;
   @include skel.skeleton-pulse;
 }

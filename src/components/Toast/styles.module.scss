@@ -6,10 +6,10 @@
   bottom: $spacing-xl;
   transform: translateX(-50%) translateY(8px);
   padding: $spacing-sm 10px;
-  background: var(--bg);
-  color: var(--text-main);
+  background: $bg;
+  color: $text-main;
   font-size: $font-size-meta;
-  border: $border-width solid var(--border);
+  border: $border-width solid $border;
   opacity: 0;
   pointer-events: none;
   transition: opacity $transition-fast, transform $transition-fast;
@@ -23,5 +23,5 @@
 }
 
 .error {
-  border-color: var(--text-main);
+  border-color: $text-main;
 }
