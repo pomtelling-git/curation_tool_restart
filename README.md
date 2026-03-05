@@ -57,6 +57,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+**Font:** The default typeface is Aeonik Fono. Place `AeonikFono-Regular.woff` in `public/fonts/`. If the file is missing, the app falls back to system fonts.
+
 ### Deploying (e.g. Vercel)
 
 For the live site to work, set the same environment variables in your host:

@@ -1,0 +1,128 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/skeleton' as skel;
+
+.app {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  padding: $spacing-lg $spacing-lg $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.back {
+  width: 28px;
+  height: 28px;
+  border: 1px solid skel.$skeleton-border;
+  background: transparent;
+  @include skel.skeleton-pulse;
+}
+
+.projectName {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  width: 48px;
+  height: 10px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.title {
+  width: 160px;
+  height: 14px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.meta {
+  width: 48px;
+  height: 10px;
+  align-self: flex-end;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.dropZone {
+  height: 120px;
+  border: 1px dashed skel.$skeleton-border;
+  background: transparent;
+  @include skel.skeleton-pulse;
+}
+
+.gallery {
+  column-count: 3;
+  column-gap: $spacing-sm;
+}
+
+.card {
+  break-inside: avoid;
+  margin-bottom: $spacing-sm;
+  border: 1px solid skel.$skeleton-border;
+  background: transparent;
+  @include skel.skeleton-pulse;
+}
+
+.cardImage {
+  width: 100%;
+  height: 140px;
+  background: skel.$skeleton-bg;
+  border-bottom: 1px solid skel.$skeleton-border;
+}
+
+.cardMeta {
+  padding: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardLine {
+  height: 8px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.cardLineShort {
+  width: 60%;
+  height: 8px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .app {
+    padding: $spacing-md;
+  }
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .gallery {
+    column-count: 1;
+  }
+}

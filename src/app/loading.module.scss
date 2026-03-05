@@ -1,0 +1,55 @@
+@use '../styles/variables' as *;
+@use '../styles/skeleton' as skel;
+
+.app {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  padding: $spacing-lg $spacing-lg $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.label {
+  width: 72px;
+  height: 12px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.button {
+  width: 100px;
+  height: 24px;
+  background: skel.$skeleton-bg;
+  border: 1px solid skel.$skeleton-border;
+  @include skel.skeleton-pulse;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: 6px;
+}
+
+.row {
+  height: 36px;
+  border: 1px solid skel.$skeleton-border;
+  background: transparent;
+  @include skel.skeleton-pulse;
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .app {
+    padding: $spacing-md;
+  }
+}

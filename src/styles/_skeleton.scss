@@ -1,0 +1,31 @@
+// Ghost / wireframe skeleton loading
+@use 'variables' as *;
+
+$skeleton-bg: #f0f0f0;
+$skeleton-border: #e0e0e0;
+
+@mixin skeleton-pulse {
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.skeleton-block {
+  background: $skeleton-bg;
+  border: 1px solid $skeleton-border;
+  @include skeleton-pulse;
+}
+
+.skeleton-wireframe {
+  background: transparent;
+  border: 1px solid $skeleton-border;
+  @include skeleton-pulse;
+}
