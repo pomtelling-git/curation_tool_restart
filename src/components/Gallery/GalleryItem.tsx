@@ -65,7 +65,10 @@ function GalleryItemComponent({
 
   const handleDragStart = useCallback(
     (e: DragEvent) => {
-      if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move'
+      if (e.dataTransfer) {
+        e.dataTransfer.effectAllowed = 'move'
+        e.dataTransfer.setData('text/plain', index.toString())
+      }
       onDragStart(index)
     },
     [onDragStart, index]
@@ -127,6 +130,7 @@ function GalleryItemComponent({
             sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
             loading="lazy"
             className={styles['gallery-image']}
+            draggable={false}
           />
         )}
         {isVideo && (
@@ -137,6 +141,7 @@ function GalleryItemComponent({
             loop
             autoPlay
             playsInline
+            draggable={false}
             onClick={handleVideoClick}
             onLoadedMetadata={handleLoadedMetadata}
           />
