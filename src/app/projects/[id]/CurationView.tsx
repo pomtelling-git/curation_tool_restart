@@ -65,8 +65,6 @@ export function CurationView({
     }
   }, [projectId, initialProject, initialAssets, setCurrentProject, setAssets, fetchAssets, showToast])
 
-  const assetsToShow =
-    initialAssets != null && initialAssets.length > 0 ? initialAssets : assets
   const projectToShow = initialProject ?? currentProject
 
   const handleTitleSave = useCallback(
@@ -87,7 +85,7 @@ export function CurationView({
     [projectId, updateProjectInStore, showToast]
   )
 
-  const hasAssets = assetsToShow.length > 0
+  const hasAssets = assets.length > 0
 
   return (
     <div className={styles.app}>
@@ -107,14 +105,14 @@ export function CurationView({
           />
         </div>
         <span className={styles['gallery-meta']}>
-          {assetsToShow.length} item{assetsToShow.length === 1 ? '' : 's'}
+          {assets.length} item{assets.length === 1 ? '' : 's'}
         </span>
       </div>
 
       <div className={styles['app-main']}>
         <DropZone onFiles={uploadFiles} compact={hasAssets} />
         <Gallery
-          assets={assetsToShow}
+          assets={assets}
           onRemove={deleteAsset}
           onReorder={reorderAssets}
         />
