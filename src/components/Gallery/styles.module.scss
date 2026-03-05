@@ -3,6 +3,7 @@
 .gallery {
   column-count: $gallery-columns;
   column-gap: $spacing-sm;
+  transition: column-count $transition-reorder;
 }
 
 .gallery-item {

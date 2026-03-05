@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/store/useStore'
 import { useAssets } from '@/hooks/useAssets'
@@ -35,6 +35,7 @@ export function CurationView({
   const showToast = useStore((s) => s.showToast)
   const { assets, fetchAssets, uploadFiles, deleteAsset, reorderAssets } =
     useAssets(projectId)
+  const [columnCount, setColumnCount] = useState(3)
 
   useEffect(() => {
     if (initialProject != null) {
@@ -104,9 +105,20 @@ export function CurationView({
             onSave={handleTitleSave}
           />
         </div>
-        <span className={styles['gallery-meta']}>
-          {assets.length} item{assets.length === 1 ? '' : 's'}
-        </span>
+        <div className={styles['header-right']}>
+          <span className={styles['gallery-meta']}>
+            {assets.length} item{assets.length === 1 ? '' : 's'}
+          </span>
+          <input
+            type="range"
+            min={1}
+            max={6}
+            value={columnCount}
+            onChange={(e) => setColumnCount(Number(e.target.value))}
+            className={styles['columns-slider']}
+            aria-label="Number of columns"
+          />
+        </div>
       </div>
 
       <div className={styles['app-main']}>
@@ -115,6 +127,7 @@ export function CurationView({
           assets={assets}
           onRemove={deleteAsset}
           onReorder={reorderAssets}
+          columnCount={columnCount}
         />
       </div>
     </div>
