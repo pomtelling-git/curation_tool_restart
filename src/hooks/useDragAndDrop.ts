@@ -12,6 +12,7 @@ interface RectMap {
 
 export function useDragAndDrop({ onReorder }: UseDragAndDropOptions) {
   const dragIndexRef = useRef<number | null>(null)
+  const lastTargetRef = useRef<number | null>(null)
   const rectsRef = useRef<RectMap>({})
 
   const captureRects = useCallback((container: HTMLElement) => {
@@ -62,24 +63,36 @@ export function useDragAndDrop({ onReorder }: UseDragAndDropOptions) {
   const handleDragOver = useCallback(
     (e: React.DragEvent, targetIndex: number, container: HTMLElement) => {
       e.preventDefault()
+      e.stopPropagation()
       if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
 
       const fromIndex = dragIndexRef.current
       if (fromIndex === null || fromIndex === targetIndex) return
+      if (lastTargetRef.current === targetIndex) return
 
+      lastTargetRef.current = targetIndex
       captureRects(container)
       onReorder(fromIndex, targetIndex)
       dragIndexRef.current = targetIndex
 
+      // Double rAF so FLIP runs after React has committed the new order to the DOM
       requestAnimationFrame(() => {
-        animateFlip(container, targetIndex)
+        requestAnimationFrame(() => {
+          animateFlip(container, targetIndex)
+        })
       })
     },
     [onReorder, captureRects, animateFlip]
   )
 
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }, [])
+
   const handleDragEnd = useCallback(() => {
     dragIndexRef.current = null
+    lastTargetRef.current = null
     rectsRef.current = {}
   }, [])
 
@@ -87,6 +100,7 @@ export function useDragAndDrop({ onReorder }: UseDragAndDropOptions) {
     handleDragStart,
     handleDragOver,
     handleDragEnd,
+    handleDrop,
     isDragging: (index: number) => dragIndexRef.current === index,
   }
 }

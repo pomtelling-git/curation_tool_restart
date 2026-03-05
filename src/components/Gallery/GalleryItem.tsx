@@ -16,6 +16,7 @@ interface GalleryItemProps {
   onDragStart: (index: number) => void
   onDragOver: (e: DragEvent, index: number, container: HTMLElement) => void
   onDragEnd: () => void
+  onDrop: (e: DragEvent) => void
   isDragging: boolean
 }
 
@@ -30,6 +31,7 @@ function GalleryItemComponent({
   onDragStart,
   onDragOver,
   onDragEnd,
+  onDrop,
   isDragging,
 }: GalleryItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -96,6 +98,7 @@ function GalleryItemComponent({
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={onDragEnd}
+      onDrop={onDrop}
     >
       <div className={styles['media-wrapper']}>
         <span className={styles['media-badge']}>

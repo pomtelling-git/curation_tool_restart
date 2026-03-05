@@ -21,14 +21,19 @@ interface GalleryProps {
 
 export function Gallery({ assets, onRemove, onReorder }: GalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { handleDragStart, handleDragOver, handleDragEnd } = useDragAndDrop({
-    onReorder,
-  })
+  const { handleDragStart, handleDragOver, handleDragEnd, handleDrop } =
+    useDragAndDrop({ onReorder })
 
   if (assets.length === 0) return null
 
   return (
-    <div ref={containerRef} className={styles.gallery} role="list">
+    <div
+      ref={containerRef}
+      className={styles.gallery}
+      role="list"
+      onDrop={handleDrop}
+      onDragOver={(e) => e.preventDefault()}
+    >
       {assets.map((asset, index) => (
         <GalleryItem
           key={asset.id}
@@ -42,6 +47,7 @@ export function Gallery({ assets, onRemove, onReorder }: GalleryProps) {
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
+          onDrop={handleDrop}
           isDragging={false}
         />
       ))}
