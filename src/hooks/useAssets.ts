@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
+import { flushSync } from 'react-dom'
 import { useStore } from '@/store/useStore'
 
 export function useAssets(projectId: string) {
@@ -94,7 +95,9 @@ export function useAssets(projectId: string) {
 
   const reorderAssets = useCallback(
     async (fromIndex: number, toIndex: number) => {
-      reorderAssetsInStore(fromIndex, toIndex)
+      flushSync(() => {
+        reorderAssetsInStore(fromIndex, toIndex)
+      })
 
       const reordered = [...assets]
       const [moved] = reordered.splice(fromIndex, 1)
