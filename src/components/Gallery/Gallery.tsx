@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import { useDragAndDrop } from '@/hooks/useDragAndDrop'
+import { useState } from 'react'
 import { GalleryItem } from './GalleryItem'
 import styles from './styles.module.scss'
 
@@ -20,20 +19,32 @@ interface GalleryProps {
 }
 
 export function Gallery({ assets, onRemove, onReorder }: GalleryProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { handleDragStart, handleDragOver, handleDragEnd, handleDrop } =
-    useDragAndDrop({ onReorder })
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
 
   if (assets.length === 0) return null
 
+  const handleDragStart = (index: number) => {
+    setDragIndex(index)
+  }
+
+  const handleDragOver = (e: React.DragEvent, _index: number) => {
+    e.preventDefault()
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
+  }
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault()
+    if (dragIndex === null || dragIndex === targetIndex) return
+    onReorder(dragIndex, targetIndex)
+    setDragIndex(null)
+  }
+
+  const handleDragEnd = () => {
+    setDragIndex(null)
+  }
+
   return (
-    <div
-      ref={containerRef}
-      className={styles.gallery}
-      role="list"
-      onDrop={handleDrop}
-      onDragOver={(e) => e.preventDefault()}
-    >
+    <div className={styles.gallery} role="list">
       {assets.map((asset, index) => (
         <GalleryItem
           key={asset.id}
@@ -46,9 +57,9 @@ export function Gallery({ assets, onRemove, onReorder }: GalleryProps) {
           onRemove={onRemove}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
           onDrop={handleDrop}
-          isDragging={false}
+          onDragEnd={handleDragEnd}
+          isDragging={dragIndex === index}
         />
       ))}
     </div>

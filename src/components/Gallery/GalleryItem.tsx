@@ -14,9 +14,9 @@ interface GalleryItemProps {
   index: number
   onRemove: (id: string) => void
   onDragStart: (index: number) => void
-  onDragOver: (e: DragEvent, index: number, container: HTMLElement) => void
+  onDragOver: (e: DragEvent, index: number) => void
+  onDrop: (e: DragEvent, index: number) => void
   onDragEnd: () => void
-  onDrop: (e: DragEvent) => void
   isDragging: boolean
 }
 
@@ -30,8 +30,8 @@ function GalleryItemComponent({
   onRemove,
   onDragStart,
   onDragOver,
-  onDragEnd,
   onDrop,
+  onDragEnd,
   isDragging,
 }: GalleryItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -78,10 +78,16 @@ function GalleryItemComponent({
 
   const handleDragOver = useCallback(
     (e: DragEvent) => {
-      const container = (e.currentTarget as HTMLElement).parentElement
-      if (container) onDragOver(e, index, container)
+      onDragOver(e, index)
     },
     [onDragOver, index]
+  )
+
+  const handleDrop = useCallback(
+    (e: DragEvent) => {
+      onDrop(e, index)
+    },
+    [onDrop, index]
   )
 
   const classes = [
@@ -97,8 +103,8 @@ function GalleryItemComponent({
       draggable
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
+      onDrop={handleDrop}
       onDragEnd={onDragEnd}
-      onDrop={onDrop}
     >
       <div className={styles['media-wrapper']}>
         <span className={styles['media-badge']}>
