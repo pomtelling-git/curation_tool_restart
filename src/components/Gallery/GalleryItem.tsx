@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useCallback, useState, DragEvent } from 'react'
+import { memo, useRef, useCallback, useState, DragEvent } from 'react'
+import Image from 'next/image'
 import { formatBytes, formatDuration } from '@/lib/utils/format'
 import styles from './styles.module.scss'
 
@@ -18,7 +19,7 @@ interface GalleryItemProps {
   isDragging: boolean
 }
 
-export function GalleryItem({
+function GalleryItemComponent({
   id,
   fileName,
   url,
@@ -118,7 +119,15 @@ export function GalleryItem({
         </a>
 
         {isImage && (
-          <img src={url} alt={fileName} loading="lazy" />
+          <Image
+            src={url}
+            alt={fileName}
+            width={400}
+            height={300}
+            sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+            loading="lazy"
+            className={styles['gallery-image']}
+          />
         )}
         {isVideo && (
           <video
@@ -144,3 +153,5 @@ export function GalleryItem({
     </article>
   )
 }
+
+export const GalleryItem = memo(GalleryItemComponent)

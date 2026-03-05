@@ -57,6 +57,26 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Deploying (e.g. Vercel)
+
+For the live site to work, set the same environment variables in your host:
+
+1. Open your project in [Vercel](https://vercel.com) (or your platform).
+2. Go to **Settings → Environment Variables**.
+3. Add each variable from `.env` (do not commit `.env` itself):
+
+| Variable | Required | Notes |
+|----------|----------|--------|
+| `DATABASE_URL` | Yes | Pooled Postgres URL (port 6543, `?pgbouncer=true`). URL-encode the password if it contains `+`, `?`, `@`, `#`, `:`, `/`. |
+| `DIRECT_URL` | Yes | Direct Postgres URL (port 5432). |
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anon key. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Supabase service role key (for Storage and server actions). |
+
+4. Redeploy the project so the new variables are applied.
+
+If you see "Failed to create project" or "Database connection failed" on the live site, the host is missing these or they are incorrect.
+
 ### Commands
 
 | Command | Description |

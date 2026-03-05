@@ -36,6 +36,12 @@
   }
 }
 
+.gallery-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .media-badge {
   position: absolute;
   top: $spacing-sm;

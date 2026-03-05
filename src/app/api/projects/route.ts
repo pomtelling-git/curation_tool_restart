@@ -35,11 +35,18 @@ export async function POST(request: Request) {
     const message =
       error instanceof Error ? error.message : String(error)
     console.error('POST /api/projects error:', error)
+    const isDbError =
+      /authentication|connection|connect|ECONNREFUSED|P1000|P1001|P1013|credentials|invalid.*database/i.test(
+        message
+      )
+    const hint =
+      process.env.NODE_ENV === 'development'
+        ? message
+        : isDbError
+          ? 'Database connection failed. Add DATABASE_URL and DIRECT_URL in Vercel (or your host) Environment Variables.'
+          : 'Failed to create project'
     return NextResponse.json(
-      {
-        error: 'Failed to create project',
-        ...(process.env.NODE_ENV === 'development' && { detail: message }),
-      },
+      { error: 'Failed to create project', detail: hint },
       { status: 500 }
     )
   }

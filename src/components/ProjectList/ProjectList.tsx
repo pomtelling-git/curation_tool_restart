@@ -5,16 +5,27 @@ import { useRouter } from 'next/navigation'
 import { useProjects } from '@/hooks/useProjects'
 import { Button } from '@/components/ui/Button'
 import { ProjectRow } from './ProjectRow'
+import type { Project } from '@/types'
 import styles from './styles.module.scss'
 
-export function ProjectList() {
+interface ProjectListProps {
+  initialProjects?: Project[]
+}
+
+export function ProjectList({ initialProjects }: ProjectListProps) {
   const router = useRouter()
-  const { projects, fetchProjects, createProject, updateProject, deleteProject } =
+  const { projects, setProjects, fetchProjects, createProject, updateProject, deleteProject } =
     useProjects()
 
   useEffect(() => {
-    fetchProjects()
-  }, [fetchProjects])
+    if (initialProjects?.length !== undefined && initialProjects.length > 0) {
+      setProjects(initialProjects)
+    } else {
+      fetchProjects()
+    }
+  }, [initialProjects, setProjects, fetchProjects])
+
+  const projectsToShow = initialProjects?.length ? initialProjects : projects
 
   const handleCreate = async () => {
     const project = await createProject()
@@ -30,10 +41,10 @@ export function ProjectList() {
         <Button onClick={handleCreate}>New project</Button>
       </div>
       <div className={styles.list}>
-        {projects.length === 0 ? (
+        {projectsToShow.length === 0 ? (
           <p className={styles.empty}>No pages yet.</p>
         ) : (
-          projects.map((project) => (
+          projectsToShow.map((project) => (
             <ProjectRow
               key={project.id}
               project={project}

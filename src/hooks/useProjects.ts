@@ -85,6 +85,7 @@ export function useProjects() {
 
   return {
     projects,
+    setProjects,
     fetchProjects,
     createProject,
     updateProject,

@@ -9,40 +9,65 @@ import { Button } from '@/components/ui/Button'
 import { DropZone } from '@/components/DropZone'
 import { Gallery } from '@/components/Gallery'
 import type { Project } from '@/types'
+import type { Asset } from '@/types'
 import styles from './styles.module.scss'
+
+interface AssetWithUrl extends Asset {
+  url: string
+}
 
 interface CurationViewProps {
   projectId: string
+  initialProject?: Project | null
+  initialAssets?: AssetWithUrl[]
 }
 
-export function CurationView({ projectId }: CurationViewProps) {
+export function CurationView({
+  projectId,
+  initialProject,
+  initialAssets,
+}: CurationViewProps) {
   const router = useRouter()
   const currentProject = useStore((s) => s.currentProject)
   const setCurrentProject = useStore((s) => s.setCurrentProject)
+  const setAssets = useStore((s) => s.setAssets)
   const updateProjectInStore = useStore((s) => s.updateProject)
   const showToast = useStore((s) => s.showToast)
   const { assets, fetchAssets, uploadFiles, deleteAsset, reorderAssets } =
     useAssets(projectId)
 
   useEffect(() => {
-    async function loadProject() {
-      try {
-        const res = await fetch(`/api/projects/${projectId}`)
-        if (!res.ok) throw new Error('Project not found')
-        const project: Project = await res.json()
-        setCurrentProject(project)
-      } catch {
-        showToast('Could not load project', 'error')
-      }
+    if (initialProject != null) {
+      setCurrentProject(initialProject)
     }
-
-    loadProject()
-    fetchAssets()
+    if (initialAssets != null) {
+      setAssets(initialAssets)
+    }
+    if (initialProject == null) {
+      async function loadProject() {
+        try {
+          const res = await fetch(`/api/projects/${projectId}`)
+          if (!res.ok) throw new Error('Project not found')
+          const project: Project = await res.json()
+          setCurrentProject(project)
+        } catch {
+          showToast('Could not load project', 'error')
+        }
+      }
+      loadProject()
+    }
+    if (initialAssets == null) {
+      fetchAssets()
+    }
 
     return () => {
       setCurrentProject(null)
     }
-  }, [projectId, setCurrentProject, fetchAssets, showToast])
+  }, [projectId, initialProject, initialAssets, setCurrentProject, setAssets, fetchAssets, showToast])
+
+  const assetsToShow =
+    initialAssets != null && initialAssets.length > 0 ? initialAssets : assets
+  const projectToShow = initialProject ?? currentProject
 
   const handleTitleSave = useCallback(
     async (name: string) => {
@@ -62,7 +87,7 @@ export function CurationView({ projectId }: CurationViewProps) {
     [projectId, updateProjectInStore, showToast]
   )
 
-  const hasAssets = assets.length > 0
+  const hasAssets = assetsToShow.length > 0
 
   return (
     <div className={styles.app}>
@@ -77,19 +102,19 @@ export function CurationView({ projectId }: CurationViewProps) {
         <div className={styles['project-name']}>
           <span className={styles['project-label']}>Project</span>
           <EditableTitle
-            value={currentProject?.name || 'Untitled project'}
+            value={projectToShow?.name || 'Untitled project'}
             onSave={handleTitleSave}
           />
         </div>
         <span className={styles['gallery-meta']}>
-          {assets.length} item{assets.length === 1 ? '' : 's'}
+          {assetsToShow.length} item{assetsToShow.length === 1 ? '' : 's'}
         </span>
       </div>
 
       <div className={styles['app-main']}>
         <DropZone onFiles={uploadFiles} compact={hasAssets} />
         <Gallery
-          assets={assets}
+          assets={assetsToShow}
           onRemove={deleteAsset}
           onReorder={reorderAssets}
         />
