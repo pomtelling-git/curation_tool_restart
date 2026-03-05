@@ -7,8 +7,8 @@
 
 .gallery-item {
   position: relative;
-  border: $border-width solid var(--border);
-  background: var(--bg);
+  border: $border-width solid $border;
+  background: $bg;
   display: flex;
   flex-direction: column;
   cursor: move;
@@ -25,7 +25,7 @@
 .media-wrapper {
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  background: $bg;
 
   img,
   video {
@@ -48,8 +48,8 @@
   left: $spacing-sm;
   padding: 1px $spacing-sm;
   font-size: $font-size-badge;
-  background: var(--bg);
-  border: $border-width solid var(--border);
+  background: $bg;
+  border: $border-width solid $border;
   z-index: 1;
 }
 
@@ -60,9 +60,9 @@
   width: $button-size;
   height: $button-size;
   border-radius: $border-radius;
-  border: $border-width solid var(--border);
-  background: var(--bg);
-  color: var(--text-main);
+  border: $border-width solid $border;
+  background: $bg;
+  color: $text-main;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,8 +74,8 @@
   transition: background $transition-fast, color $transition-fast;
 
   &:hover {
-    background: var(--text-main);
-    color: var(--bg);
+    background: $text-main;
+    color: $bg;
   }
 }
 
@@ -106,7 +106,7 @@
 .item-details {
   margin: 0;
   font-size: $font-size-badge;
-  color: var(--text-muted);
+  color: $text-muted;
   display: flex;
   justify-content: space-between;
   gap: $spacing-sm;

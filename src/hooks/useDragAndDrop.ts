@@ -63,7 +63,6 @@ export function useDragAndDrop({ onReorder }: UseDragAndDropOptions) {
   const handleDragOver = useCallback(
     (e: React.DragEvent, targetIndex: number, container: HTMLElement) => {
       e.preventDefault()
-      e.stopPropagation()
       if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
 
       const fromIndex = dragIndexRef.current
@@ -87,7 +86,6 @@ export function useDragAndDrop({ onReorder }: UseDragAndDropOptions) {
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
-    e.stopPropagation()
   }, [])
 
   const handleDragEnd = useCallback(() => {
