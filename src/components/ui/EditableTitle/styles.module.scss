@@ -9,6 +9,6 @@
   cursor: text;
 
   &:focus {
-    border-bottom-color: $border;
+    border-bottom-color: var(--border);
   }
 }

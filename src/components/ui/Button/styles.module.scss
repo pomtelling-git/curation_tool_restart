@@ -2,17 +2,17 @@
 
 .button {
   border-radius: $border-radius;
-  border: $border-width solid $border;
-  background: $bg;
-  color: $text-main;
+  border: $border-width solid var(--border);
+  background: var(--bg);
+  color: var(--text-main);
   cursor: pointer;
   font-size: $font-size-label;
   line-height: 1;
   transition: background $transition-fast, color $transition-fast;
 
   &:hover {
-    background: $text-main;
-    color: $bg;
+    background: var(--text-main);
+    color: var(--bg);
   }
 
   &:disabled {

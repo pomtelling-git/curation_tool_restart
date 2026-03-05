@@ -28,7 +28,7 @@
 .empty {
   margin: $spacing-sm 0 0;
   font-size: $font-size-label;
-  color: $text-muted;
+  color: var(--text-muted);
 }
 
 .project-row {
@@ -37,7 +37,7 @@
   justify-content: space-between;
   gap: $spacing-md;
   padding: $spacing-sm 6px;
-  border: $border-width solid $border;
+  border: $border-width solid var(--border);
   cursor: pointer;
   transition: opacity $transition-medium, transform $transition-medium;
 }
@@ -81,13 +81,13 @@
   padding: 0 $spacing-sm;
   border: none;
   background: transparent;
-  color: $text-main;
+  color: var(--text-main);
   cursor: default;
   font-size: $font-size-label;
 
   &:hover {
     background: transparent;
-    color: $text-main;
+    color: var(--text-main);
   }
 }
 
